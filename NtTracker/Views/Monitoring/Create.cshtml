@@ -1,0 +1,246 @@
+﻿@using System.Threading
+@using NtTracker.Resources.Monitoring
+@using NtTracker.Resources.Shared
+@model NtTracker.ViewModels.MonitoringViewModel
+@section styles {
+    @Styles.Render("~/Content/datetimepicker")
+}
+@{
+    ViewBag.Title = Strings.Create;
+    var patientId = Request.Params["fromId"];
+}
+
+<h3>
+    @Strings.Create <small>@SharedStrings.Patient #@patientId</small>
+</h3>
+
+@using (Html.BeginForm("Create", "Monitoring", new { fromId = patientId }, FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-green">
+                        <h3 class="panel-title">@Strings.MonitoringInfo</h3>
+                    </div>
+                    <div class="panel-body panel-body-green">
+                        <div class="form-group required">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control"}})
+                                @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="input-group date" id="dateTimePicker">
+                                    @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#dateTimePicker').datetimepicker({
+                                        locale: '@Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName',
+                                        debug: true @*Fix for IE8*@
+                                    });
+                                });
+                                @*Close datetimepicker when clicking any other element*@
+                                $(document).click(function (e) {
+                                    var target = $(e.target);
+                                    if (target.parents('.bootstrap-datetimepicker-widget').length < 1 && !target.hasClass('input-group-addon') && !target.hasClass('glyphicon')) {
+                                        if ($('.bootstrap-datetimepicker-widget').length > 0) {
+                                            $('#dateTimePicker').each(function (index) {
+                                                $(this).data('DateTimePicker').hide();
+                                            });
+                                        }
+                                    }
+                                });
+                            </script>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-green">
+                        <h3 class="panel-title">@Strings.MotorData</h3>
+                    </div>
+                    <div class="panel-body panel-body-green">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MuscularTone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.MuscularTone, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MuscularTone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Spasticity, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Spasticity)
+                                    @Html.ValidationMessageFor(model => model.Spasticity, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Dystonia, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Dystonia)
+                                    @Html.ValidationMessageFor(model => model.Dystonia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Dyskinesia, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Dyskinesia)
+                                    @Html.ValidationMessageFor(model => model.Dyskinesia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ataxia, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Ataxia)
+                                    @Html.ValidationMessageFor(model => model.Ataxia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Hyperreflexia, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Hyperreflexia)
+                                    @Html.ValidationMessageFor(model => model.Hyperreflexia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DevelopmentReflexes, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.DevelopmentReflexes, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DevelopmentReflexes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-green">
+                        <h3 class="panel-title">@Strings.CognitiveData</h3>
+                    </div>
+                    <div class="panel-body panel-body-green">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CognitiveDeficit, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.CognitiveDeficit, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CognitiveDeficit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PrimaryReflexes, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.PrimaryReflexes)
+                                    @Html.ValidationMessageFor(model => model.PrimaryReflexes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AuditoryDeficit, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.AuditoryDeficit, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AuditoryDeficit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VisualDeficit, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.VisualDeficit, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.VisualDeficit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VocalDeficit, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.VocalDeficit, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.VocalDeficit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-green">
+                        <h3 class="panel-title">@Strings.EmotionalData</h3>
+                    </div>
+                    <div class="panel-body panel-body-green">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TactileResponse, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.TactileResponse, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TactileResponse, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SoundResponse, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.SoundResponse, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SoundResponse, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CaretakerResponse, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.CaretakerResponse, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CaretakerResponse, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StrangersResponse, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EnumDropDownListFor(model => model.StrangersResponse, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.StrangersResponse, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Smiles, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Smiles)
+                                    @Html.ValidationMessageFor(model => model.Smiles, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions no-color">
+            <p><span class="label label-default">@SharedStrings.FormRequired</span></p>
+            @Html.ActionLink(@SharedStrings.Cancel, "List", "Monitoring", new { id = patientId }, new {@class = "btn btn-default"})
+            <input type="submit" value="@SharedStrings.Save" class="btn btn-success"/>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    <script>
+        jQuery.validator.methods["date"] = function (value, element) { return true; };
+    </script>
+}

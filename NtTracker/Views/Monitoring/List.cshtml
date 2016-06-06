@@ -1,0 +1,94 @@
+﻿@using NtTracker.Resources.Monitoring
+@using NtTracker.Resources.Shared
+@model NtTracker.ViewModels.ListMonitoringViewModel
+@{
+    ViewBag.Title = SharedStrings.PatientDetails + " #" + Model.PatientId;
+}
+
+<!-- Patient navigation -->
+<ul class="nav nav-pills">
+    <li role="presentation">@Html.ActionLink(SharedStrings.ListPatients, "List", "Patient")</li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.CreatePatient, "Create", "Patient")</li>
+</ul>
+<hr class="nav-sep" />
+<h3>
+    @SharedStrings.PatientDetails <small>#@Model.PatientId</small>
+</h3>
+<div class="form-horizontal">
+    <!-- Patient details navigation -->
+    <ul class="nav nav-tabs">
+        <li role="presentation">@Html.ActionLink(@SharedStrings.PatientData, "View", "Patient", new { id = Model.PatientId }, null)</li>
+        <li role="presentation">@Html.ActionLink(@SharedStrings.NBRSurveillance, "View", "NbrSurveillance", new { id = Model.PatientId }, null)</li>
+        <li role="presentation" class="active"><a href="#">@SharedStrings.Monitoring</a></li>
+    </ul>
+
+    <!-- Content -->
+    <div class="tab-content">
+        <h4>@SharedStrings.Examinations</h4>
+        <div class="well well-sm table-scrollable">
+            <table class="table table-hover">
+                <tr class="success">
+                    <th>@SharedStrings.DateTime</th>
+                    <th>@Strings.Description</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Monitorings)
+                {
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td class="col-md-3 text-center">
+                        @Html.ActionLink(SharedStrings.View, "View", new { id = item.Id }) |
+                        @Html.ActionLink(Strings.Edit, "Edit", new { id = item.Id }) |
+                        <a data-target="#deleteConfirmation" data-toggle="modal" data-mon-id="@item.Id" href="#">@Strings.DeleteMonitoring</a>
+                    </td>
+                </tr>
+                }
+            </table>
+            @if (Model.Monitorings.Count == 0) { @Strings.NoMonitorings }
+        </div>
+        @Html.ActionLink(@Strings.AddMonitoring, "Create", new { fromId = Model.PatientId },  new { @id = "EditButton", @role = "button", @class = "btn btn-default" })
+    </div>
+</div>
+<br/>
+@Html.ActionLink(@SharedStrings.Back, "List", "Patient", new { id = Model.PatientId }, new { @class = "btn btn-default" })
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteMonitoringLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteMonitoringLabel">@Strings.DeleteMonitoringTitle</h4>
+            </div>
+            <div class="modal-body">
+                @Strings.DeleteMonitoringDescription
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "Monitoring", new { fromId = Model.PatientId }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input name="id" type="hidden" value="">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                    <button type="submit" class="btn btn-danger">@Strings.DeleteMonitoring</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $("[data-toggle=popover]").popover();
+
+        //Set the id of the delete confirmation form
+        $('#deleteConfirmation').on('show.bs.modal', function (e) {
+            var monitoringId = $(e.relatedTarget).data('mon-id');
+            $(e.currentTarget).find('input[name="id"]').val(monitoringId);
+        });
+    </script>
+}

@@ -1,0 +1,176 @@
+﻿@using NtTracker.Extensions
+@using NtTracker.Resources.Monitoring
+@using NtTracker.Resources.Shared
+@model NtTracker.ViewModels.MonitoringViewModel
+@{
+    ViewBag.Title = Strings.ViewTitle + " #" + Model.PatientId;
+}
+
+<h3>
+    @Strings.ViewTitle <small>@SharedStrings.Patient #@Model.PatientId</small>
+</h3>
+<div class="form-horizontal">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.MonitoringInfo</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Description">@Strings.Description</label>
+                <div class="col-md-10">
+                    <input id="Description" class="form-control text-box single-line" type="text" value="@Model.Description" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="DateTime">@SharedStrings.DateTime</label>
+                <div class="col-md-10">
+                    <input id="DateTime" class="form-control text-box single-line" type="datetime" value="@Model.DateTime.ToString("g")" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Comments">@Strings.Comments</label>
+                <div class="col-md-10">
+                    <textarea id="Comments" class="form-control text-box" rows="3" placeholder="@SharedStrings.NA" readonly="readonly">@Model.Comments</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.MotorData</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="MuscularTone">@Strings.MuscularTone</label>
+                <div class="col-md-10">
+                    <input id="MuscularTone" class="form-control text-box single-line" type="text" value="@Model.MuscularTone.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.Spasticity</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("Spasticity", Model.Spasticity, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.Dystonia</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("Dystonia", Model.Dystonia, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.Dyskinesia</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("Dyskinesia", Model.Dyskinesia, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.Ataxia</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("Ataxia", Model.Ataxia, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.Hyperreflexia</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("Hyperreflexia", Model.Hyperreflexia, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="DevelopmentReflexes">@Strings.DevelopmentReflexes</label>
+                <div class="col-md-10">
+                    <input id="DevelopmentReflexes" class="form-control text-box single-line" type="text" value="@Model.DevelopmentReflexes.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.CognitiveData</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CognitiveDeficit">@Strings.CognitiveDeficit</label>
+                <div class="col-md-10">
+                    <input id="CognitiveDeficit" class="form-control text-box single-line" type="text" value="@Model.CognitiveDeficit.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.PrimaryReflexes</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("PrimaryReflexes", Model.PrimaryReflexes, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="AuditoryDeficit">@Strings.AuditoryDeficit</label>
+                <div class="col-md-10">
+                    <input id="AuditoryDeficit" class="form-control text-box single-line" type="text" value="@Model.AuditoryDeficit.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="VisualDeficit">@Strings.VisualDeficit</label>
+                <div class="col-md-10">
+                    <input id="VisualDeficit" class="form-control text-box single-line" type="text" value="@Model.VisualDeficit.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="VocalDeficit">@Strings.VocalDeficit</label>
+                <div class="col-md-10">
+                    <input id="VocalDeficit" class="form-control text-box single-line" type="text" value="@Model.VocalDeficit.ToLocalizedString()" readonly="readonly" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.EmotionalData</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="TactileResponse">@Strings.TactileResponse</label>
+                <div class="col-md-10">
+                    <input id="TactileResponse" class="form-control text-box single-line" type="text" value="@Model.TactileResponse.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="SoundResponse">@Strings.SoundResponse</label>
+                <div class="col-md-10">
+                    <input id="SoundResponse" class="form-control text-box single-line" type="text" value="@Model.SoundResponse.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CaretakerResponse">@Strings.CaretakerResponse</label>
+                <div class="col-md-10">
+                    <input id="CaretakerResponse" class="form-control text-box single-line" type="text" value="@Model.CaretakerResponse.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="StrangersResponse">@Strings.StrangersResponse</label>
+                <div class="col-md-10">
+                    <input id="StrangersResponse" class="form-control text-box single-line" type="text" value="@Model.StrangersResponse.ToLocalizedString()" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">@Strings.Smiles</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBox("Smiles", Model.Smiles, new {@disabled = "disabled"})
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+@Html.ActionLink(@Strings.Back, "List", "Monitoring", new { id = Model.PatientId }, new { @class = "btn btn-default" })

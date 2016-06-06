@@ -1,0 +1,4 @@
+﻿/* Fix for bootstrap input groups rendered with wrong width */
+.input-group {
+    max-width: 306px;
+}

@@ -1,0 +1,99 @@
+﻿@using NtTracker.Resources.NbrSurveillance
+@using NtTracker.Resources.Shared
+@using NtTracker.ViewModels
+@model EditNbrSurveillanceViewModel
+@{
+    ViewBag.Title = Strings.Create;
+    var patientId = Request.Params["fromId"];
+}
+
+<h3>
+    @Strings.Edit <small>@SharedStrings.Patient #@patientId</small>
+</h3>
+
+@using (Html.BeginForm("Create", "NbrSurveillance", new { fromId = patientId }, FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <br/>
+                <div class="form-group required">
+                    @Html.LabelFor(model => model.TimeSlot, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.TimeSlot, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TimeSlot, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-green">
+                        <h3 class="panel-title">@Strings.CnsExploration</h3>
+                    </div>
+                    <div class="panel-body panel-body-green">
+                        @Html.Partial("CnsExploration/_EditPartial", Model.CnsExploration, new ViewDataDictionary
+                        {
+                            TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "CnsExploration" }
+                        })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="TfUltrasound">@Strings.TfUltrasound
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.TfUltrasoundDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.TfUltrasound, SharedStrings.NA, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TfUltrasound, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="AEeg">@SharedStrings.AEEG
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@SharedStrings.AEEGDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.AEeg, SharedStrings.NA, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.AEeg, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Eeg">@SharedStrings.EEG
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@SharedStrings.EEGDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Eeg, SharedStrings.NA, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Eeg, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-green">
+                        <h3 class="panel-title">@SharedStrings.Analysis</h3>
+                    </div>
+                    <div class="panel-body panel-body-green">
+                        @Html.Partial("Analysis/_EditPartial", Model.Analysis, new ViewDataDictionary
+                        {
+                            TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "Analysis" }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions no-color">
+            <p><span class="label label-default">@SharedStrings.FormRequired</span></p>
+            @Html.ActionLink(@SharedStrings.Cancel, "View", "NbrSurveillance", new { id = patientId }, new {@class = "btn btn-default"})
+            <input type="submit" value="@SharedStrings.Save" class="btn btn-success"/>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("[data-toggle=popover]").popover();
+    </script>
+}

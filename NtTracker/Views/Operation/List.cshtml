@@ -1,0 +1,224 @@
+﻿@using System.Threading
+@using NtTracker.Extensions
+@using NtTracker.Models
+@using NtTracker.Resources.Operation
+@using NtTracker.Resources.Shared
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Operation>
+@section styles {
+    @Styles.Render("~/Content/listStyle")
+    @Styles.Render("~/Content/datetimepicker")
+}
+
+@{
+    ViewBag.Title = SharedStrings.AdminOperations;
+}
+
+<ul class="nav nav-pills">
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminIndex, "Index", "Administration")</li>
+    <li role="presentation" class="active"><a href="#">@SharedStrings.AdminOperations</a></li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminUsers, "List", "UserAccount")</li>
+</ul>
+<hr class="nav-sep" />
+
+<!-- Filter -->
+<div class="panel panel-success">
+    <div class="panel-heading"><a data-toggle="collapse" data-target="#filter" href="#">@Strings.OperationsFilter</a></div>
+    <div id="filter" class="panel-body collapse">
+        @using (Html.BeginForm("List", "Operation", FormMethod.Get, new { @id = "searchForm" }))
+        {
+            <div class="form-inline">
+                <div class="form-group">
+                    @Html.Label("User", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.OperationUser + ":")
+                    @Html.TextBox("User", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Operation", htmlAttributes: new {@class = "control-label"}, labelText: @Strings.OperationType + ":")
+                    @Html.DropDownList("Operation", EnumExtensions.GetSelectListWithValue(typeof (OperationType)), "", new {@class = "form-control"})
+                </div>
+                <div class="form-group">
+                    @Html.Label("Patient", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.OperationsPatientId + ":")
+                    @Html.TextBox("Patient", "", htmlAttributes: new { @class = "form-control", @type = "number" })
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.Label("DateFrom", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.OperationTimeFrom + ":") &nbsp;
+                    <div class="input-group date" id="dateFromPicker">
+                        @Html.TextBox("DateFrom", "", htmlAttributes: new { @class = "form-control text-box single-line", @type = "datetime" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    &nbsp; @Html.Label("DateTo", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.OperationTimeTo + ":") &nbsp;
+                    <div class="input-group date" id="dateToPicker">
+                        @Html.TextBox("DateTo", "", htmlAttributes: new { @class = "form-control text-box single-line", @type = "datetime" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                        $('#dateFromPicker').datetimepicker({
+                            locale: '@Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName',
+                            debug: true @*Fix for IE8*@
+                        });
+                    });
+                    $(function() {
+                        $('#dateToPicker').datetimepicker({
+                            locale: '@Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName',
+                            debug: true @*Fix for IE8*@
+                        });
+                    });
+                    @*Close datetimepicker when clicking any other element*@
+                    $(document).click(function (e) {
+                        var target = $(e.target);
+                        if (target.parents('.bootstrap-datetimepicker-widget').length < 1 && !target.hasClass('input-group-addon') && !target.hasClass('glyphicon')) {
+                            if ($('.bootstrap-datetimepicker-widget').length > 0) {
+                                $('#dateFromPicker').each(function (index) {
+                                    $(this).data('DateTimePicker').hide();
+                                });
+                                $('#dateToPicker').each(function (index) {
+                                    $(this).data('DateTimePicker').hide();
+                                });
+                            }
+                        }
+                    });
+                    $('#dateFromPicker').on("dp.show", function (e) {
+                        $('#dateToPicker').data('DateTimePicker').hide();
+                    });
+                    $('#dateToPicker').on("dp.show",function (e) {
+                        $('#dateFromPicker').data('DateTimePicker').hide();
+                    });
+                </script>
+                <div class="form-group">
+                    @Html.Label("OperationData", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.OperationData + ":")
+                    @Html.TextBox("OperationData", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+                <hr />
+                <div class="form-actions pull-right">
+                    <input type="submit" value="@SharedStrings.FilterApply" class="btn btn-success" />
+                    <input type="submit" id="resetButton" value="@SharedStrings.FilterClean" class="btn btn-danger">
+                    <script type="text/javascript">
+                        $(function() {
+                            $('#resetButton').click(function() {
+                                $(':input', '#searchForm')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<table class="table table-bordered table-hover table-condensed">
+    <tr class="success">
+        <th>
+            @Html.ActionLink(Strings.OperationTime, "List", new { sorting = ViewBag.TimeSort })
+            @if (Request.Params["sorting"] == "time_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "time_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.OperationUser, "List", new { sorting = ViewBag.UserSort })
+            @if (Request.Params["sorting"] == "user_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "user_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.OperationType, "List", new {sorting = ViewBag.OperationSort})
+            @if (Request.Params["sorting"] == "operation_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "operation_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.OperationPatient, "List", new { sorting = ViewBag.PatientSort })
+            @if (Request.Params["sorting"] == "patient_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "patient_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+            }
+        </th>
+        <th>@Strings.OperationData</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @($"{item.TimeStamp:G}")
+            </td>
+            <td>
+                @{
+                    if (item.UserId != null)
+                    {
+                        @item.User.UserName
+                        @:
+                        @Html.ActionLink("[+]", "View", "UserAccount", new { id = @item.UserId }, null)
+                    }
+                }
+            </td>
+            <td title="@item.Action.ToLocalizedDescription()">
+                @($"[{(int)item.Action}] {item.Action.ToLocalizedString()}")
+            </td>
+            <td>
+                @{
+                    if (item.PatientId != null)
+                    {
+                        @($"{item.Patient.Name} {item.Patient.Surnames}")@:
+                        @Html.ActionLink("[+]", "View", "Patient", new { id = @item.PatientId }, null)
+                    }
+                }
+            </td>
+            <td>
+                @item.OperationData
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<div class="text-center">
+@string.Format(SharedStrings.SearchResult, Model.FirstItemOnPage, Model.LastItemOnPage, Model.TotalItemCount)
+@Html.PagedListPager(Model, page => Url.Action("List", new
+{
+    user = Request.Params["user"],
+    operation = Request.Params["operation"],
+    dateFrom = Request.Params["dateFrom"],
+    dateTo = Request.Params["dateTo"],
+    operationData = Request.Params["operationData"],
+    sorting = Request.Params["sorting"],
+    page
+}))
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datetimepicker")
+    <script>
+        $(function() { $.support.transition = false; });
+    </script>
+}

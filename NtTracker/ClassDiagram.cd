@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NtTracker.Models.Patient">
+    <Position X="6.5" Y="2.75" Width="1.5" />
+    <Members>
+      <Property Name="Hypothermias" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AiACMAADAAEgBAACAAAEQgQAACAACAAAJBBAIAAghAE=</HashCode>
+      <FileName>Models\Patient.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Registrant" />
+      <Property Name="Hypothermias" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NtTracker.Models.NbrSurveillance">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAQAAAAAAKQAAAABAAAAIBAAAAAAABAAACAA=</HashCode>
+      <FileName>Models\NbrSurveillance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Analysis" />
+      <Property Name="Patient" />
+      <Property Name="CnsExploration" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NtTracker.Models.CnsExploration">
+    <Position X="2" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIEAAAAAAAAggCAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Models\CnsExploration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NtTracker.Models.Hypothermia">
+    <Position X="6.75" Y="9.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAQAgACAACQAAAABAAAAIBAACAAAABAAACAA=</HashCode>
+      <FileName>Models\Hypothermia.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Patient" />
+      <Property Name="Analysis" />
+      <Property Name="CnsExploration" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NtTracker.Models.Analysis">
+    <Position X="4" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACABAAAAIAgAAAAAAAAABAAAAAQBAAAYCAAACAAAQ=</HashCode>
+      <FileName>Models\Analysis.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NtTracker.Models.Monitoring">
+    <Position X="9.25" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQASAIAAAQAhEAAABAAACAACCAAAAkQAAgAAACAkaAA=</HashCode>
+      <FileName>Models\Monitoring.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Patient" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NtTracker.Models.Operation">
+    <Position X="9.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAACAAQAAAAAAAAAAAAgAAAAAAEAAAAAAAAAACAQ=</HashCode>
+      <FileName>Models\Operation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+      <Property Name="Patient" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NtTracker.Models.UserAccount">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACCAACAAACAAAAAQAAAgAACQAAEAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Models\UserAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,326 @@
+﻿@using System.Threading
+@using NtTracker.Extensions
+@using NtTracker.Models
+@using NtTracker.Resources.Patient
+@using NtTracker.Resources.Shared
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Patient>
+@section styles {
+    @Styles.Render("~/Content/listStyle")
+    @Styles.Render("~/Content/datetimepicker")
+}
+
+@{
+    ViewBag.Title = SharedStrings.ListPatients;
+}
+
+<ul class="nav nav-pills">
+    <li role="presentation" class="active"><a href="#">@SharedStrings.ListPatients</a></li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.CreatePatient, "Create")</li>
+</ul>
+<hr class="nav-sep" />
+<div class="panel panel-success">
+    <div class="panel-heading"><a data-toggle="collapse" data-target="#filter" href="#">@Strings.Filter</a></div>
+    <div id="filter" class="panel-body collapse">
+        @using (Html.BeginForm("List", "Patient", FormMethod.Get, new { @id = "searchForm" }))
+        {
+            <div class="form-inline">
+                <div class="form-group col-xs-12 col-sm-5 col-lg-3">
+                    @Html.Label("Pid", htmlAttributes: new { @class = "control-label" }, labelText: Strings.Id + ":")
+                    @Html.TextBox("Pid", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-5 col-lg-4">
+                    @Html.Label("Nhc", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.Nhc + ":")
+                    @Html.TextBox("Nhc", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-5 col-lg-3">
+                    @Html.Label("Nuhsa", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.Nuhsa + ":")
+                    @Html.TextBox("Nuhsa", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-5 col-lg-3">
+                    @Html.Label("Name", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.Name + ":")
+                    @Html.TextBox("Name", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-5 col-lg-4">
+                    @Html.Label("Surnames", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.Surnames + ":")
+                    @Html.TextBox("Surnames", "", htmlAttributes: new { @class = "form-control text-box single-line" })
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                    @Html.Label("PatientStatus", htmlAttributes: new { @class = "control-label"}, labelText: @Strings.PatientStatus + ":")
+                    @Html.DropDownList("PatientStatus", EnumHelper.GetSelectList(typeof (PatientStatus)), "", new { @class = "form-control"} )
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("BirthFrom", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.BirthDateFrom + ":") &nbsp;
+                        <div class="input-group date" id="birthFromPicker">
+                            @Html.TextBox("BirthFrom", "", htmlAttributes: new { @class = "form-control text-box single-line", @type = "datetime" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        &nbsp; @Html.Label("BirthTo", htmlAttributes: new { @class = "control-label" }, labelText: @Strings.BirthDateTo + ":") &nbsp;
+                        <div class="input-group date" id="birthToPicker">
+                            @Html.TextBox("BirthTo", "", htmlAttributes: new { @class = "form-control text-box single-line", @type = "datetime" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                    $(function() {
+                        $('#birthFromPicker').datetimepicker({
+                            locale: '@Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName',
+                            debug: true @*Fix for IE8*@
+                        });
+                    });
+                    $(function() {
+                        $('#birthToPicker').datetimepicker({
+                            locale: '@Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName',
+                            debug: true @*Fix for IE8*@
+                        });
+                    });
+                    @*Close datetimepicker when clicking any other element*@
+                    $(document).click(function (e) {
+                        var target = $(e.target);
+                        if (target.parents('.bootstrap-datetimepicker-widget').length < 1 && !target.hasClass('input-group-addon') && !target.hasClass('glyphicon')) {
+                            if ($('.bootstrap-datetimepicker-widget').length > 0) {
+                                $('#birthFromPicker').each(function (index) {
+                                    $(this).data('DateTimePicker').hide();
+                                });
+                                $('#birthToPicker').each(function (index) {
+                                    $(this).data('DateTimePicker').hide();
+                                });
+                            }
+                        }
+                    });
+                    $('#birthFromPicker').on("dp.show",function (e) {
+                        $('#birthToPicker').data('DateTimePicker').hide();
+                    });
+                    $('#birthToPicker').on("dp.show",function (e) {
+                        $('#birthFromPicker').data('DateTimePicker').hide();
+                    });
+                    </script>
+                </div>
+                <div class="form-actions pull-right">
+                    <input type="submit" value="@SharedStrings.FilterApply" class="btn btn-success" />
+                    <input type="submit" id="resetButton" value="@SharedStrings.FilterClean" class="btn btn-danger">
+                    <script type="text/javascript">
+                        $(function() {
+                            $('#resetButton').click(function() {
+                                $(':input', '#searchForm')
+                                    .not(':button, :submit, :reset, :hidden')
+                                    .val('')
+                                    .removeAttr('checked')
+                                    .removeAttr('selected');
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<table class="table table-bordered table-hover">
+    <tr class="success">
+        <th>
+            @Html.ActionLink(Strings.Id, "List", new { sorting = ViewBag.IdSort })
+            @if (Request.Params["sorting"] == "id_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "id_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.Nhc, "List", new { sorting = ViewBag.NhcSort })
+            @if (Request.Params["sorting"] == "nhc_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "nhc_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.Nuhsa, "List", new { sorting = ViewBag.NuhsaSort })
+            @if (Request.Params["sorting"] == "nuhsa_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "nuhsa_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.Name, "List", new {sorting = ViewBag.NameSort})
+            @if (Request.Params["sorting"] == "name_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "name_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.Surnames, "List", new {sorting = ViewBag.SurnameSort})
+            @if (Request.Params["sorting"] == "surnames_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "surnames_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.BirthDate, "List", new {sorting = ViewBag.BirthSort})
+            @if (Request.Params["sorting"] == "birthdate_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "birthdate_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+            }
+        </th>
+        <th>
+            @Html.ActionLink(Strings.PatientStatus, "List", new {sorting = ViewBag.StatusSort})
+            @if (Request.Params["sorting"] == "status_d")
+            {
+                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+            }
+            @if (Request.Params["sorting"] == "status_a")
+            {
+                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+            }
+        </th>
+        <th></th>
+        @if (User.IsInRole("Admin"))
+        {
+        <th class="text-center">
+            @SharedStrings.Admin
+        </th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nhc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nuhsa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surnames)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @switch (item.PatientStatus)
+                {
+                    case PatientStatus.Normal:
+                        <span class="label label-success">@Strings.PatientStatus_Normal</span>
+                        break;
+
+                    case PatientStatus.NbrSurveillance:
+                        <span class="label label-warning">@Strings.PatientStatus_NbrSurveillance</span>
+                        break;
+
+                    case PatientStatus.Monitoring:
+                        <span class="label label-warning">@Strings.PatientStatus_Monitoring</span>
+                        break;
+
+                    case PatientStatus.Hypothermia:
+                        <span class="label label-danger">@Strings.PatientStatus_Hypothermia</span>
+                        break;
+                    case PatientStatus.Closed:
+                        <span class="label label-primary">@Strings.PatientStatus_Closed</span>
+                        <span class="label label-default">@item.LastStatus.ToLocalizedString()</span>
+                        break;
+                }
+            </td>
+            <td class="text-center">
+                @Html.ActionLink(SharedStrings.View, "View", new {id = item.Id})
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+            <td class="text-center">
+                @Html.ActionLink(Strings.ChangeHistory, "List", "Operation", new {patient = item.Id}, null)
+            </td>
+            }
+        </tr>
+    }
+</table>
+<div class="pull-left">
+    <a id="exportButton" href="@Url.Action("Export", new
+             {
+                 pid = Request.Params["pid"],
+                 nhc = Request.Params["nhc"],
+                 nuhsa = Request.Params["nuhsa"],
+                 name = Request.Params["name"],
+                 surnames = Request.Params["surnames"],
+                 patientStatus = Request.Params["patientStatus"],
+                 birthFrom = Request.Params["birthFrom"],
+                 birthTo = Request.Params["birthTo"],
+                 sorting = Request.Params["sorting"]
+             })" class="btn btn-sm btn-success">
+        <span class="glyphicon glyphicon-list-alt"></span> @Strings.ExportData
+    </a>
+</div>
+<div class="row">
+    <div id="exportAlertContainer" class="col-md-12"></div>
+</div>
+<div class="text-center">
+@string.Format(SharedStrings.SearchResult, Model.FirstItemOnPage, Model.LastItemOnPage, Model.TotalItemCount)
+@Html.PagedListPager(Model, page => Url.Action("List", new
+{
+    pid = Request.Params["pid"],
+    nhc = Request.Params["nhc"],
+    nuhsa = Request.Params["nuhsa"],
+    name = Request.Params["name"],
+    surnames = Request.Params["surnames"],
+    patientStatus = Request.Params["patientStatus"],
+    birthFrom = Request.Params["birthFrom"],
+    birthTo = Request.Params["birthTo"],
+    sorting = Request.Params["sorting"],
+    page
+}))
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datetimepicker")
+    <script>
+        $(function() { $.support.transition = false; })
+    </script>
+    <script>
+        $("#exportButton").click(function () {
+            $("#exportAlert").remove();
+            $("#exportAlertContainer").append("<div id='exportAlert' class='alert alert-info alert-dismissible popup-alert' role='alert'>" +
+                "<button type='button' class='close' data-dismiss='alert' aria-label='@Strings.Close'>" +
+                "<span aria-hidden='true'>&times;</span></button><strong>@Strings.ExportInfo</strong><br />@Strings.ExportInfo2</div>");
+        });
+    </script>
+}

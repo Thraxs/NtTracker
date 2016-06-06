@@ -1,0 +1,26 @@
+﻿@using NtTracker.Resources.Shared
+@{
+    ViewBag.Title = SharedStrings.AdminPanel;
+}
+
+<ul class="nav nav-pills">
+    <li role="presentation" class="active"><a href="#">@SharedStrings.AdminIndex</a></li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminOperations, "List", "Operation")</li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminUsers, "List", "UserAccount")</li>
+</ul>
+<hr class="nav-sep" />
+<h1>@SharedStrings.AdminPanel</h1>
+<div>
+    <h3>@SharedStrings.AdminOperations</h3>
+    <p>
+        @SharedStrings.AdminOperationsDesc
+    </p>
+    @Html.ActionLink(SharedStrings.AdminOperations + " »", "List", "Operation", null, new { @class = "btn btn-success" })
+</div>
+<div>
+    <h3>@SharedStrings.AdminUsers</h3>
+    <p>
+        @SharedStrings.AdminUsersDesc
+    </p>
+    @Html.ActionLink(SharedStrings.AdminUsers + " »", "List", "UserAccount", null, new { @class = "btn btn-success" })
+</div>

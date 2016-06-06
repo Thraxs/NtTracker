@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Username" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Identified as</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Log off</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="LoginDescription" xml:space="preserve">
+    <value>Use a DMSAS/SSPA Intranet account to log in the system. You must have registered previously to log in.</value>
+  </data>
+  <data name="LoginDescription2" xml:space="preserve">
+    <value>The format for the user name is surname-name-ID ending, e.g. smithjohn61E.</value>
+  </data>
+  <data name="RegisterDescription" xml:space="preserve">
+    <value>Register a new user using a DMSAS/SSPA intranet account.</value>
+  </data>
+  <data name="RegisterDescription2" xml:space="preserve">
+    <value>This new user account is specific for this application but it's linked to the SSPA Intranet for authentication. Therefore you need an already existing DMSAS/SSPA Intranet user to register.</value>
+  </data>
+  <data name="RegisterDesc" xml:space="preserve">
+    <value>Register as new user</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>Incorrect user name or password.</value>
+  </data>
+  <data name="LoginHelp" xml:space="preserve">
+    <value>If you have problems to login or register, please contact your IT service.</value>
+  </data>
+  <data name="LoginLocked" xml:space="preserve">
+    <value>Your account has been temporarily locked after too many failed login attempts. It will unlock </value>
+  </data>
+  <data name="LoginLocked2" xml:space="preserve">
+    <value>. Further login tries will increase the lockout time or will end up locking the account indefinitely.</value>
+  </data>
+  <data name="LoginLockedPerm" xml:space="preserve">
+    <value>Your account has been indefinitely locked. Contact an administrator of the system to have it unlocked.</value>
+  </data>
+  <data name="AlreadyRegistered" xml:space="preserve">
+    <value>If you are already registered click here to login.</value>
+  </data>
+  <data name="JustRegistered" xml:space="preserve">
+    <value>Registration successful. You can now use your account to log in to the system.</value>
+  </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="RegisteredFrom" xml:space="preserve">
+    <value>Registered from</value>
+  </data>
+  <data name="RegisteredTo" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="AccountStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UserFilter" xml:space="preserve">
+    <value>Filter accounts</value>
+  </data>
+  <data name="Type_Normal" xml:space="preserve">
+    <value>Normal user</value>
+  </data>
+  <data name="Type_Admin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="Status_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Status_Locked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Registration date</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>User account details</value>
+  </data>
+  <data name="BasicData" xml:space="preserve">
+    <value>Basic data</value>
+  </data>
+  <data name="LastLoginData" xml:space="preserve">
+    <value>Last login data</value>
+  </data>
+  <data name="LockData" xml:space="preserve">
+    <value>Account lock data</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Last login</value>
+  </data>
+  <data name="LastLoginInfo" xml:space="preserve">
+    <value>Connection data</value>
+  </data>
+  <data name="UnlockDate" xml:space="preserve">
+    <value>Unlock date</value>
+  </data>
+  <data name="FailedAttempts" xml:space="preserve">
+    <value>Failed login attempts</value>
+  </data>
+  <data name="AdminLocked" xml:space="preserve">
+    <value>This account is currently locked. You may unlock it manually or, if it has an unlock date, wait for it to unlock automatically.</value>
+  </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
+  <data name="UserOperations" xml:space="preserve">
+    <value>Activity history</value>
+  </data>
+  <data name="UserAlreadyExists" xml:space="preserve">
+    <value>There is already a user account with that name.</value>
+  </data>
+  <data name="DeleteDescription" xml:space="preserve">
+    <value>All the information related to this account will be irreversibly removed from the system. Are you sure you want to delete this user account?</value>
+  </data>
+  <data name="LockAccount" xml:space="preserve">
+    <value>Lock account</value>
+  </data>
+  <data name="UnlockAccount" xml:space="preserve">
+    <value>Unlock account</value>
+  </data>
+  <data name="LockDescription" xml:space="preserve">
+    <value>The account will be locked and the user will not be able to log in to the system until it's unlocked again. Are you sure you want to lock this account?</value>
+  </data>
+  <data name="UnlockDescription" xml:space="preserve">
+    <value>The account will be unlocked and the user will be able to log in to the system again. Are you sure you want to unlock this account?</value>
+  </data>
+  <data name="LastLoginData_Desc" xml:space="preserve">
+    <value>IP address and user agent of the last login</value>
+  </data>
+  <data name="IsAdmin" xml:space="preserve">
+    <value>Is administrator?</value>
+  </data>
+  <data name="AuthenticationError" xml:space="preserve">
+    <value>Authentication server error</value>
+  </data>
+  <data name="RegisterTitle" xml:space="preserve">
+    <value>New user registration</value>
+  </data>
+</root>

@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Neonate Tracker</value>
+  </data>
+  <data name="Patients" xml:space="preserve">
+    <value>Patients</value>
+  </data>
+  <data name="NBRSurveillance" xml:space="preserve">
+    <value>NBR Surveillance</value>
+  </data>
+  <data name="PatientData" xml:space="preserve">
+    <value>Patient data</value>
+  </data>
+  <data name="PatientDetails" xml:space="preserve">
+    <value>Patient details</value>
+  </data>
+  <data name="TimeSlot_6h" xml:space="preserve">
+    <value>&lt;6 hours</value>
+  </data>
+  <data name="TimeSlot_24h" xml:space="preserve">
+    <value>24 hours</value>
+  </data>
+  <data name="TimeSlot_48h" xml:space="preserve">
+    <value>48 hours</value>
+  </data>
+  <data name="TimeSlot_72h" xml:space="preserve">
+    <value>72 hours</value>
+  </data>
+  <data name="TimeSlot_5_7d" xml:space="preserve">
+    <value>5-7 days</value>
+  </data>
+  <data name="TimeSlot_Discharge" xml:space="preserve">
+    <value>Discharge</value>
+  </data>
+  <data name="TimeSlot" xml:space="preserve">
+    <value>Time slot</value>
+  </data>
+  <data name="AEEG_BurstSupression" xml:space="preserve">
+    <value>Burst supression</value>
+  </data>
+  <data name="AEEG_Continuous" xml:space="preserve">
+    <value>Continuous</value>
+  </data>
+  <data name="AEEG_Convulsion" xml:space="preserve">
+    <value>Convulsion</value>
+  </data>
+  <data name="AEEG_Discontinuous" xml:space="preserve">
+    <value>Discontinuous</value>
+  </data>
+  <data name="AEEG_Flat" xml:space="preserve">
+    <value>Flat</value>
+  </data>
+  <data name="AEEG_LowVoltage" xml:space="preserve">
+    <value>Low voltage</value>
+  </data>
+  <data name="EEG" xml:space="preserve">
+    <value>EEG</value>
+  </data>
+  <data name="EEG_LowVoltage" xml:space="preserve">
+    <value>Low voltage</value>
+  </data>
+  <data name="EEG_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="EEG_Slow" xml:space="preserve">
+    <value>Slow</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Monitoring" xml:space="preserve">
+    <value>Monitoring</value>
+  </data>
+  <data name="Hypothermia" xml:space="preserve">
+    <value>Hypothermia</value>
+  </data>
+  <data name="Convulsion" xml:space="preserve">
+    <value>Convulsion</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="SearchResult" xml:space="preserve">
+    <value>Showing results {0} through {1} from a total of {2}.</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Show details</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="FilterApply" xml:space="preserve">
+    <value>Apply filter</value>
+  </data>
+  <data name="FilterClean" xml:space="preserve">
+    <value>Clean filter</value>
+  </data>
+  <data name="DEBUG_Notice" xml:space="preserve">
+    <value>DISCLAIMER: This application is not affiliated in any way to the "Servicio Andaluz de Salud" or the "Junta de Andalucía". The application is currently deployed in a development environment and there is no connection to any real system nor any use of real data.</value>
+  </data>
+  <data name="ListPatients" xml:space="preserve">
+    <value>List patients</value>
+  </data>
+  <data name="CreatePatient" xml:space="preserve">
+    <value>Register new patient</value>
+  </data>
+  <data name="AdminPanel" xml:space="preserve">
+    <value>Administration panel</value>
+  </data>
+  <data name="AdminIndex" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="AdminOperations" xml:space="preserve">
+    <value>Operation log</value>
+  </data>
+  <data name="AdminUsers" xml:space="preserve">
+    <value>User accounts</value>
+  </data>
+  <data name="RegistrationThrottleError" xml:space="preserve">
+    <value>You can not register so many users in such a short time.</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Go back to list</value>
+  </data>
+  <data name="AEEG" xml:space="preserve">
+    <value>aEEG</value>
+  </data>
+  <data name="AEEGDesc" xml:space="preserve">
+    <value>Amplitude-integrated electroencephalogram</value>
+  </data>
+  <data name="EEGDesc" xml:space="preserve">
+    <value>Electroencephalogram</value>
+  </data>
+  <data name="Patient" xml:space="preserve">
+    <value>Patient</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="FormRequired" xml:space="preserve">
+    <value>The fields marked with * are mandatory.</value>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="Validation_Required" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="Validation_StringLength" xml:space="preserve">
+    <value>The {0} field must have a length between {2} and {1} characters.</value>
+  </data>
+  <data name="Validation_Range" xml:space="preserve">
+    <value>The {0} field must be between {1} and {2}.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Behavior" xml:space="preserve">
+    <value>Behavior</value>
+  </data>
+  <data name="Behavior_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Behavior_Irregular" xml:space="preserve">
+    <value>Irregular</value>
+  </data>
+  <data name="Behavior_NoResponse" xml:space="preserve">
+    <value>No response</value>
+  </data>
+  <data name="CranialNerves" xml:space="preserve">
+    <value>Cranial Nerves</value>
+  </data>
+  <data name="CranialNerves_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="CranialNerves_Irregular" xml:space="preserve">
+    <value>Irregular activity</value>
+  </data>
+  <data name="Tone" xml:space="preserve">
+    <value>Tone</value>
+  </data>
+  <data name="Tone_Good" xml:space="preserve">
+    <value>Good</value>
+  </data>
+  <data name="Tone_Irregular" xml:space="preserve">
+    <value>Irregular</value>
+  </data>
+  <data name="Tone_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Position_Good" xml:space="preserve">
+    <value>Good</value>
+  </data>
+  <data name="Position_Irregular" xml:space="preserve">
+    <value>Irregular</value>
+  </data>
+  <data name="Position_Bad" xml:space="preserve">
+    <value>Bad</value>
+  </data>
+  <data name="Reflexes" xml:space="preserve">
+    <value>Reflexes</value>
+  </data>
+  <data name="Reflexes_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Reflexes_Irregular" xml:space="preserve">
+    <value>Irregular</value>
+  </data>
+  <data name="Reflexes_NoReaction" xml:space="preserve">
+    <value>No reaction</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date and time</value>
+  </data>
+  <data name="Examinations" xml:space="preserve">
+    <value>List of exams performed to the patient</value>
+  </data>
+  <data name="HomeDescription1" xml:space="preserve">
+    <value>Application for tracking neonates at risk of hypoxic ischemic encephalopathy.</value>
+  </data>
+  <data name="HomeDescription2" xml:space="preserve">
+    <value>This is the main page of the application. Now that you are authenticated you can go to the patients section to start working with the application.</value>
+  </data>
+  <data name="PatientsSection" xml:space="preserve">
+    <value>From the patients section you can list all the patients registered currently in the system, register new patients or inspect and modify the information of the patients.</value>
+  </data>
+  <data name="AdministrationSection" xml:space="preserve">
+    <value>From the administration section you can see information about the usage of the application and control the operations performed by the users in the system.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ErrorDescription" xml:space="preserve">
+    <value>An application error has occurred.</value>
+  </data>
+  <data name="AdminOperationsDesc" xml:space="preserve">
+    <value>In this section you can see a list of all the operations performed by the users in the system, detailed both by the users that performed them and the patients affected.</value>
+  </data>
+  <data name="AdminUsersDesc" xml:space="preserve">
+    <value>In this section you can see a list of all the users registered in the system, you can see their information, delete them, unlock locked accounts or search the operations performed by them in the system.</value>
+  </data>
+</root>

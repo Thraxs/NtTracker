@@ -1,0 +1,72 @@
+﻿@using NtTracker.Extensions
+@using NtTracker.Resources.Shared
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <!--[if lt IE 9]>
+    @Scripts.Render("~/bundles/comp")
+    @Styles.Render("~/Content/comp")
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img alt="Brand" src="~/Content/img/logo.png">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@Html.IsActive("Home")">
+                        @Html.ActionLink(SharedStrings.Home, "Index", "Home")
+                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="@Html.IsActive("Patient,Hypothermia,CnsExploration,Monitoring,NbrSurveillance")">
+                            @Html.ActionLink(@SharedStrings.Patients, "List", "Patient")
+                        </li>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li class="@Html.IsActive("Administration,Operation,UserAccount")">
+                                @Html.ActionLink(@SharedStrings.Admin, "Index", "Administration")
+                            </li>
+                        }
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <footer class="footer">
+            <div class="container">
+                <hr />
+                <ul class="list-inline">
+                    <li><a href="@Url.Current(new {culture = "es-ES"})">Español (España)</a></li>
+                    <li><a href="@Url.Current(new {culture = "en"})">English (US)</a></li>
+                </ul>
+                <p>&copy; @DateTime.Now.Year - Neonate Tracker</p>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,162 @@
+﻿@using NtTracker.Resources.Analysis
+@model NtTracker.ViewModels.AnalysisViewModel
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Hemoglobin">
+        @Strings.Hemoglobin
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.HemoglobinInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Hemoglobin, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">g/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Hemoglobin, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Hematocrit">
+        @Strings.Hematocrit
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.HematocritInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Hematocrit, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">L/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Hematocrit, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_PlateletCount">
+        @Strings.PlateletCount
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.PlateletCountInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.PlateletCount, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">/mm&sup3;</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.PlateletCount, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Alt">
+        @Strings.ALT
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ALTInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Alt, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">IU/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Alt, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Ast">
+        @Strings.AST
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ASTInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Ast, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">IU/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Ast, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Cpk">
+        @Strings.CPK
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.CPKInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Cpk, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">U/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Cpk, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Proteins">
+        @Strings.Proteins
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ProteinsInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Proteins, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">g/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Proteins, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Sodium">
+        @Strings.Sodium
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.SodiumInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Sodium, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">mmol/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Sodium, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Potassium">
+        @Strings.Potassium
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.PotassiumInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Potassium, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">mmol/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Potassium, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Analysis_Chloride">
+        @Strings.Chloride
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ChlorideInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Chloride, new {htmlAttributes = new {@class = "form-control"}})
+            <span class="input-group-addon">mmol/L</span>
+        </div>
+        @Html.ValidationMessageFor(model => model.Chloride, "", new {@class = "text-danger"})
+    </div>
+</div>

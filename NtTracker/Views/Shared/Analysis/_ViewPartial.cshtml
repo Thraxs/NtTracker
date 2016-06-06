@@ -1,0 +1,212 @@
+﻿@using NtTracker.Resources.Analysis
+@model NtTracker.Models.Analysis
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Hemoglobin">
+        @Strings.Hemoglobin
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.HemoglobinInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(0, Model.Hemoglobin))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.HemoglobinDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Hemoglobin" class="form-control text-box single-line" type="text" value="@Model.Hemoglobin" readonly="readonly"/>
+            <span class="input-group-addon">g/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Hematocrit">
+        @Strings.Hematocrit
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.HematocritInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(1, Model.Hematocrit))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.HematocritDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Hematocrit" class="form-control text-box single-line" type="text" value="@Model.Hematocrit" readonly="readonly" />
+            <span class="input-group-addon">L/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="PlateletCount">
+        @Strings.PlateletCount
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.PlateletCountInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(2, Model.PlateletCount))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.PlateletDanger">
+                    <span class="glyphicon glyphicon-alert"></span>                
+                </span>
+            }
+            <input id="PlateletCount" class="form-control text-box single-line" type="text" value="@Model.PlateletCount" readonly="readonly"/>
+            <span class="input-group-addon">/mm&sup3;</span> 
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Alt">
+        @Strings.ALT
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ALTInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(3, Model.Alt))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ALTDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Alt" class="form-control text-box single-line" type="text" value="@Model.Alt" readonly="readonly"/>
+            <span class="input-group-addon">IU/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Ast">
+        @Strings.AST
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ASTInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(4, Model.Ast))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ASTDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Ast" class="form-control text-box single-line" type="text" value="@Model.Ast" readonly="readonly"/>
+            <span class="input-group-addon">IU/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Cpk">
+        @Strings.CPK
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.CPKInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(5, Model.Cpk))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.CPKDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Cpk" class="form-control text-box single-line" type="text" value="@Model.Cpk" readonly="readonly"/>
+            <span class="input-group-addon">U/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Proteins">
+        @Strings.Proteins
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ProteinsInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(6, Model.Proteins))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ProteinsDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Proteins" class="form-control text-box single-line" type="text" value="@Model.Proteins" readonly="readonly"/>
+            <span class="input-group-addon">g/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Sodium">
+        @Strings.Sodium
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.SodiumInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(7, Model.Sodium))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.SodiumDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Sodium" class="form-control text-box single-line" type="text" value="@Model.Sodium" readonly="readonly"/>
+            <span class="input-group-addon">mmol/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Potassium">
+        @Strings.Potassium
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.PotassiumInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(8, Model.Potassium))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.PotassiumDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Potassium" class="form-control text-box single-line" type="text" value="@Model.Potassium" readonly="readonly"/>
+            <span class="input-group-addon">mmol/L</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4" for="Chloride">
+        @Strings.Chloride
+        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ChlorideInfo">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+    </label>
+    <div class="col-md-8">
+        <div class="input-group">
+            @if (!Model.CheckRange(9, Model.Chloride))
+            {
+                <span class="input-group-addon input-group-alert" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.ChlorideDanger">
+                    <span class="glyphicon glyphicon-alert"></span>
+                </span>
+            }
+            <input id="Chloride" class="form-control text-box single-line" type="text" value="@Model.Chloride" readonly="readonly" />
+            <span class="input-group-addon">mmol/L</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,352 @@
+﻿@using NtTracker.Extensions
+@using NtTracker.Models
+@using NtTracker.Resources.Patient
+@using NtTracker.Resources.Shared
+@model NtTracker.ViewModels.PatientViewModel
+@{
+    ViewBag.Title = SharedStrings.PatientDetails + " #" + Model.Id;
+}
+
+<!-- Patient navigation -->
+<ul class="nav nav-pills">
+    <li role="presentation">@Html.ActionLink(SharedStrings.ListPatients, "List")</li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.CreatePatient, "Create")</li>
+</ul>
+<hr class="nav-sep" />
+<h3>@SharedStrings.PatientDetails <small>#@Model.Id</small></h3>
+<div class="form-horizontal">
+    <!-- Patient details navigation -->
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">@SharedStrings.PatientData</a></li>
+        @if (Model.PatientStatus == PatientStatus.NbrSurveillance || Model.PatientStatus == PatientStatus.Monitoring)
+        {
+            <li role="presentation">@Html.ActionLink(@SharedStrings.NBRSurveillance, "View", "NbrSurveillance", new { id = Model.Id }, null)</li>
+            if (Model.PatientStatus == PatientStatus.Monitoring)
+            {
+                <li role="presentation">@Html.ActionLink(@SharedStrings.Monitoring, "List", "Monitoring", new { id = Model.Id }, null)</li>
+            }
+        }
+        @if (Model.PatientStatus == PatientStatus.Hypothermia)
+        {
+            <li role="presentation">@Html.ActionLink(@SharedStrings.Hypothermia, "View", "Hypothermia", new { id = Model.Id }, null)</li>
+        }
+    </ul>
+
+    <!-- Content -->
+    <div class="tab-content">
+        <p>
+            @if (Model.PatientStatus == PatientStatus.Closed)
+            {
+                <a role="button" class="btn btn-default" data-target="#openTrackingConfirmation" data-toggle="modal" href="#">@Strings.OpenTracking</a>
+            }
+            else
+            {
+                @Html.ActionLink(@Strings.EditPatientData, "Edit", new { id = Model.Id }, new { @role = "button", @class = "btn btn-default" })
+                <a role="button" class="btn btn-default" data-target="#deleteConfirmation" data-toggle="modal" href="#">@Strings.DeletePatient</a>
+                <a role="button" class="btn btn-default" data-target="#closeTrackingConfirmation" data-toggle="modal" href="#">@Strings.CloseTracking</a>
+            }
+        </p>
+        @{
+            var statusClass = "";
+            switch (Model.PatientStatus)
+            {
+                case PatientStatus.Normal:
+                    statusClass = "alert alert-success";
+                    break;
+                case PatientStatus.Closed:
+                    statusClass = "alert alert-info";
+                    break;
+                default:
+                    statusClass = "alert alert-danger";
+                    break;
+            }        
+        }
+        <div class="@statusClass" role="alert">
+            <b>@Strings.PatientStatus</b>: @Model.PatientStatus.ToLocalizedDescription()
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-green">
+                <h3 class="panel-title">@Strings.AdministrativeData</h3>
+            </div>
+            <div class="panel-body panel-body-green">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="PatientId">@Strings.Id
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.IdDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        <input id="PatientId" class="form-control text-box single-line" type="text" value="@Model.Id" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Nhc">@Strings.Nhc
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.NhcDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        <input id="Nhc" class="form-control text-box single-line" type="text" value="@Model.Nhc" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Nuhsa">@Strings.Nuhsa
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.NuhsaDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        <input id="Nuhsa" class="form-control text-box single-line" type="text" value="@Model.Nuhsa" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="RegistrantName">@Strings.RegistrantName</label>
+                    <div class="col-md-10">
+                        <input id="RegistrantName" class="form-control text-box single-line" type="text" value="@Model.RegistrantName" readonly="readonly" />
+                    </div>
+                </div>
+                @if (Model.PatientStatus == PatientStatus.Closed)
+                {
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="LastStatus">@Strings.LastStatus
+                        <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.LastStatusDesc">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </label>
+                    <div class="col-md-10">
+                        <input id="LastStatus" class="form-control text-box single-line" type="text" value="@Model.LastStatus.ToLocalizedString()" readonly="readonly" />
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-green">
+                <h3 class="panel-title">@Strings.PersonalData</h3>
+            </div>
+            <div class="panel-body panel-body-green">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Name">@Strings.Name</label>
+                    <div class="col-md-10">
+                        <input id="Name" class="form-control text-box single-line" type="text" value="@Model.Name" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Surnames">@Strings.Surnames</label>
+                    <div class="col-md-10">
+                        <input id="Surnames" class="form-control text-box single-line" type="text" value="@Model.Surnames" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Surnames">@Strings.PatientSex</label>
+                    <div class="col-md-10">
+                        <input id="Sex" class="form-control text-box single-line" type="text" value="@Model.Sex.ToLocalizedString()" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="BirthDate">@Strings.BirthDate</label>
+                    <div class="col-md-10">
+                        <input id="BirthDate" class="form-control text-box single-line" type="datetime" value="@Model.BirthDate.ToString("g")" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-green">
+                <h3 class="panel-title">@Strings.PerinatalData</h3>
+            </div>
+            <div class="panel-body panel-body-green">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="BirthType">@Strings.BirthType</label>
+                    <div class="col-md-10">
+                        <input id="BirthType" class="form-control text-box single-line" type="text" value="@Model.BirthType.ToLocalizedString()" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Ph">@Strings.Ph</label>
+                    <div class="col-md-10">
+                        <input id="Ph" class="form-control text-box single-line" type="text" value="@Model.Ph" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Apgar">@Strings.Apgar</label>
+                    <div class="col-md-10">
+                        <input id="Apgar" class="form-control text-box single-line" type="text" value="@Model.Apgar" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Weight">@Strings.Weight</label>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input id="Weight" class="form-control text-box single-line" type="text" value="@Model.Weight" readonly="readonly" />
+                            <span class="input-group-addon">g</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="CprType">@Strings.CprType</label>
+                    <div class="col-md-10">
+                        <input id="CprType" class="form-control text-box single-line" type="text" value="@Model.CprType.ToLocalizedString()" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-green">
+                <h3 class="panel-title">@Strings.ConciousnessData</h3>
+            </div>
+            <div class="panel-body panel-body-green">
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Strings.Lethargy</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("Lethargy", Model.Lethargy, new {@disabled = "disabled"})
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Strings.Stupor</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("Stupor", Model.Stupor, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Strings.Coma</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("Coma", Model.Coma, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-green">
+                <h3 class="panel-title">@Strings.OtherData</h3>
+            </div>
+            <div class="panel-body panel-body-green">
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Strings.AlteredTone</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("AlteredTone", Model.AlteredTone, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Strings.AlteredReflexes</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("AlteredReflexes", Model.AlteredReflexes, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Strings.AlteredSuction</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("AlteredSuction", Model.AlteredSuction, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">@SharedStrings.Convulsion</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBox("Convulsion", Model.Convulsion, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<br/>
+@Html.ActionLink(@SharedStrings.Back, "List", null, new { @class = "btn btn-default" })
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deletePatientLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deletePatientLabel">@Strings.DeleteTitle</h4>
+            </div>
+            <div class="modal-body">
+                @Strings.DeleteDescription
+            </div>
+            <div class="modal-footer">
+            @using (Html.BeginForm("Delete", "Patient", new { id = Model.Id }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                <button type="submit" class="btn btn-danger">@Strings.DeletePatient</button>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.PatientStatus == PatientStatus.Closed)
+{
+    <!-- Open tracking confirmation modal -->
+    <div class="modal fade" id="openTrackingConfirmation" tabindex="-1" role="dialog" aria-labelledby="openTrackingLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="openTrackingLabel">@Strings.OpenTitle</h4>
+                </div>
+                <div class="modal-body">
+                    @Strings.OpenDescription
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm("Open" +
+                                           "", "Patient", new {id = Model.Id}, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                        <button type="submit" class="btn btn-success">@Strings.OpenTracking</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+} else { 
+    <!-- Close tracking confirmation modal -->
+    <div class="modal fade" id="closeTrackingConfirmation" tabindex="-1" role="dialog" aria-labelledby="closeTrackingLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="closeTrackingLabel">@Strings.CloseTitle</h4>
+                </div>
+                <div class="modal-body">
+                    <p>@Strings.CloseDescription</p>
+                    <p>@Strings.CloseDescription2</p>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm("Close", "Patient", new { id = Model.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                        <button type="submit" class="btn btn-danger">@Strings.CloseTracking</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $("[data-toggle=popover]").popover();
+    </script>
+}

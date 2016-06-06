@@ -1,0 +1,41 @@
+﻿@model NtTracker.ViewModels.CnsExplorationViewModel
+
+<div class="form-group required">
+    @Html.LabelFor(model => model.Behavior, htmlAttributes: new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Behavior, htmlAttributes: new {@class = "form-control"})
+        @Html.ValidationMessageFor(model => model.Behavior, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group required">
+    @Html.LabelFor(model => model.CranialNerves, htmlAttributes: new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.CranialNerves, htmlAttributes: new {@class = "form-control"})
+        @Html.ValidationMessageFor(model => model.CranialNerves, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group required">
+    @Html.LabelFor(model => model.Tone, htmlAttributes: new {@class = "control-label col-md-2"})
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Tone, htmlAttributes: new {@class = "form-control"})
+        @Html.ValidationMessageFor(model => model.Tone, "", new {@class = "text-danger"})
+    </div>
+</div>
+
+<div class="form-group required">
+    @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Position, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group required">
+    @Html.LabelFor(model => model.Reflexes, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Reflexes, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Reflexes, "", new { @class = "text-danger" })
+    </div>
+</div>

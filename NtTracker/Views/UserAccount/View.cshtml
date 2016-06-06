@@ -1,0 +1,197 @@
+﻿@using Microsoft.AspNet.Identity
+@using NtTracker.Resources.Shared
+@using NtTracker.Resources.UserAccount
+@model NtTracker.ViewModels.UserAccountViewModel
+@{
+    ViewBag.Title = Strings.Details + " #" + Model.Id;
+}
+
+<ul class="nav nav-pills">
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminIndex, "Index", "Administration")</li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminOperations, "List", "Operation")</li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.AdminUsers, "List", "UserAccount")</li>
+</ul>
+<hr class="nav-sep" />
+<h3>
+    @Strings.Details <small>#@Model.Id</small>
+</h3>
+@if (Model.IsLocked)
+{
+    <div class="alert alert-danger" role="alert">
+        @Strings.AdminLocked
+    </div>
+}
+<p>
+    @if (Model.Id != User.Identity.GetUserId<int>())
+    {
+        if (Model.IsLocked)
+        {
+            <a role="button" class="btn btn-default" data-target="#unlockConfirmation" data-toggle="modal" href="#">@Strings.UnlockAccount</a>
+        }
+        else
+        {
+            <a role="button" class="btn btn-default" data-target="#lockConfirmation" data-toggle="modal" href="#">@Strings.LockAccount</a>
+        }
+    <a role="button" class="btn btn-default" data-target="#deleteConfirmation" data-toggle="modal" href="#">@Strings.DeleteAccount</a>
+    }
+</p>
+<div class="form-horizontal">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.BasicData</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input id="Id" class="form-control text-box single-line" type="text" value="@Model.Id" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input id="UserName" class="form-control text-box single-line" type="text" value="@Model.UserName" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsAdmin, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <div class="checkbox">
+                        @Html.CheckBox("IsAdmin", Model.IsAdmin, new { @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input id="RegistrationDate" class="form-control text-box single-line" type="datetime" value="@Model.RegistrationDate.ToString("g")" readonly="readonly" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.LastLoginData</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastLogin, htmlAttributes: new { @class = "control-label col-md-3"} )
+                <div class="col-md-9">
+                    @{ var lastLogin = Model.LastLogin?.ToString("g") ?? SharedStrings.NA; }
+                    <input id="LastLogin" class="form-control text-box single-line" type="datetime" value="@lastLogin" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3" for="LastLoginInfo">@Strings.LastLoginData
+                    <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.LastLoginData_Desc">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </a>
+                </label>
+                <div class="col-md-9">
+                    <textarea id="LastLoginInfo" class="form-control text-box" rows="3" placeholder="@SharedStrings.NA" 
+                              readonly="readonly">@Model.LastLoginInfo</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading panel-heading-green">
+            <h3 class="panel-title">@Strings.LockData</h3>
+        </div>
+        <div class="panel-body panel-body-green">
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsLocked, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <div class="checkbox">
+                        @Html.CheckBox("IsLocked", Model.IsLocked, new { @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UnlockDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @{ var unlockDate = Model.UnlockDate?.ToString("g") ?? ""; }
+                    <input id="UnlockDate" class="form-control text-box single-line" type="datetime" value="@unlockDate" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FailedLoginAttempts, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input id="FailedLoginAttempts" class="form-control text-box single-line" type="text" value="@Model.FailedLoginAttempts" readonly="readonly" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteUserLabel">@Strings.DeleteAccount</h4>
+            </div>
+            <div class="modal-body">
+                @Strings.DeleteDescription
+            </div>
+            <div class="modal-footer">
+            @using (Html.BeginForm("Delete", "UserAccount", new {id = Model.Id}, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                <button type="submit" class="btn btn-danger">@Strings.DeleteAccount</button>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Unlock confirmation modal -->
+<div class="modal fade" id="unlockConfirmation" tabindex="-1" role="dialog" aria-labelledby="unlockUserLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="unlockUserLabel">@Strings.UnlockAccount</h4>
+            </div>
+            <div class="modal-body">
+                @Strings.UnlockDescription
+            </div>
+            <div class="modal-footer">
+            @using (Html.BeginForm("Unlock", "UserAccount", new {id = Model.Id}, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                <button type="submit" class="btn btn-success">@Strings.UnlockAccount</button>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Lock confirmation modal -->
+<div class="modal fade" id="lockConfirmation" tabindex="-1" role="dialog" aria-labelledby="lockUserLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="lockUserLabel">@Strings.LockAccount</h4>
+            </div>
+            <div class="modal-body">
+                @Strings.LockDescription
+            </div>
+            <div class="modal-footer">
+            @using (Html.BeginForm("Lock", "UserAccount", new { id = Model.Id }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                <button type="submit" class="btn btn-danger">@Strings.LockAccount</button>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+@Html.ActionLink(@SharedStrings.Back, "List", null, new { @class = "btn btn-default" })
+@section Scripts {
+    <script>
+        $("[data-toggle=popover]").popover();
+    </script>
+}

@@ -1,0 +1,160 @@
+﻿@using NtTracker.Extensions
+@using NtTracker.Models
+@using NtTracker.Resources.NbrSurveillance
+@using NtTracker.Resources.Shared
+@model NtTracker.ViewModels.ViewNbrSurveillanceViewModel
+@{
+    ViewBag.Title = SharedStrings.PatientDetails + " #" + Model.PatientId;
+}
+
+<!-- Patient navigation -->
+<ul class="nav nav-pills">
+    <li role="presentation">@Html.ActionLink(SharedStrings.ListPatients, "List", "Patient")</li>
+    <li role="presentation">@Html.ActionLink(SharedStrings.CreatePatient, "Create", "Patient")</li>
+</ul>
+<hr class="nav-sep" />
+<h3>
+    @SharedStrings.PatientDetails <small>#@Model.PatientId</small>
+</h3>
+<div class="form-horizontal">
+    <!-- Patient details navigation -->
+    <ul class="nav nav-tabs">
+        <li role="presentation">@Html.ActionLink(@SharedStrings.PatientData, "View", "Patient", new { id = Model.PatientId }, null)</li>
+        <li role="presentation" class="active"><a href="#">@SharedStrings.NBRSurveillance</a></li>
+        @if (Model.PatientStatus == PatientStatus.Monitoring)
+        {
+            <li role="presentation">@Html.ActionLink(@SharedStrings.Monitoring, "List", "Monitoring", new { id = Model.PatientId }, null)</li>
+        }
+    </ul>
+    <!-- Content -->
+    <div class="tab-content">
+        @if (Model.PatientStatus == PatientStatus.Monitoring)
+        {
+        <div class="alert alert-danger" role="alert">
+            @Model.PatientStatus.ToLocalizedDescription()
+        </div>
+        }
+
+        <p>@Strings.Description</p>
+        <!-- NbrSurveillances navigation -->
+        <ul class="nav nav-tabs nav-sub" role="tablist">
+            @{
+                bool first = true;
+                foreach (var item in Model.NbrSurveillances)
+                {
+                    if (first)
+                    {
+                        <li role="presentation" class="active"><a href="#@item.Id" aria-controls="@item.Id" role="tab" data-toggle="tab">@item.TimeSlot.ToLocalizedString()</a></li>
+                        first = false;
+                        continue;
+                    }
+                    <li role="presentation"><a href="#@item.Id" aria-controls="@item.Id" role="tab" data-toggle="tab">@item.TimeSlot.ToLocalizedString()</a></li>
+                }
+                <li role="presentation">
+                    @Html.ActionLink("+ " + Strings.AddSurveillance, "Create", "NbrSurveillance", new {fromId = Model.PatientId}, null)
+                </li>
+            }
+        </ul>
+        <!-- NbrSurveillances content -->
+        <div class="tab-content tab-sub">
+            @{
+                first = true;
+                foreach (var item in Model.NbrSurveillances)
+                {
+                    <div role="tabpanel" class="tab-pane fade in @if (first){<text>active</text>first = false;}" id="@item.Id">
+                        <p>
+                            @Html.ActionLink(@Strings.Edit, "Edit", "NbrSurveillance", new {id = item.Id, fromId = Model.PatientId}, new {@role = "button", @class = "btn btn-default"})
+                            <a role="button" class="btn btn-default" data-target="#deleteConfirmation" data-toggle="modal" data-exp-id="@item.Id" href="#">@Strings.Delete</a>
+                        </p>
+                        <div class="panel panel-default">
+                            <div class="panel-heading panel-heading-green">
+                                <h3 class="panel-title">@Strings.CnsExploration</h3>
+                            </div>
+                            <div class="panel-body panel-body-green">
+                                @Html.Partial("CnsExploration/_ViewPartial", item.CnsExploration)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="TfUltrasound">
+                                @Strings.TfUltrasound
+                                <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@Strings.TfUltrasoundDesc">
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </a>
+                            </label>
+                            <div class="col-md-10">
+                                <input id="TfUltrasound" class="form-control text-box single-line" type="text" value="@item.TfUltrasound.ToLocalizedString()" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="AEeg">
+                                @SharedStrings.AEEG
+                                <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@SharedStrings.AEEGDesc">
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </a>
+                            </label>
+                            <div class="col-md-10">
+                                <input id="AEeg" class="form-control text-box single-line" type="text" value="@item.AEeg.ToLocalizedString()" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Eeg">
+                                @SharedStrings.EEG
+                                <a data-container="body" data-trigger="hover" data-toggle="popover" data-placement="right" data-content="@SharedStrings.EEGDesc">
+                                    <span id="Eeg" class="glyphicon glyphicon-question-sign"></span>
+                                </a>
+                            </label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" type="text" value="@item.Eeg.ToLocalizedString()" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading panel-heading-green">
+                                <h3 class="panel-title">@SharedStrings.Analysis</h3>
+                            </div>
+                            <div class="panel-body panel-body-green">
+                                @Html.Partial("Analysis/_ViewPartial", item.Analysis)
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<br />
+@Html.ActionLink(@SharedStrings.Back, "List", "Patient", new { id = Model.PatientId }, new { @class = "btn btn-default" })
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteSurveillanceLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteSurveillanceLabel">@Strings.DeleteSurveillanceTitle</h4>
+            </div>
+            <div class="modal-body">
+                @Strings.DeleteSurveillanceDescription
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Delete", "NbrSurveillance", new { fromId = Model.PatientId }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input name="id" type="hidden" value="" >
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@SharedStrings.Cancel</button>
+                    <button type="submit" class="btn btn-danger">@Strings.DeleteNbrSurveillance</button>
+                }
+            </div>
+        </div>
+    </div>
+</div> 
+@section Scripts {
+    <script>
+        $("[data-toggle=popover]").popover();
+
+        //Set the id of the delete confirmation form
+        $('#deleteConfirmation').on('show.bs.modal', function (e) {
+            var explorationId = $(e.relatedTarget).data('exp-id');
+            $(e.currentTarget).find('input[name="id"]').val(explorationId);
+        });
+    </script>
+}

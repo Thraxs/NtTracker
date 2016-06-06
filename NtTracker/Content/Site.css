@@ -1,0 +1,265 @@
+﻿body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+  white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+.input-group,
+select {
+  max-width: 280px;
+}
+textarea {
+  max-width: 400px;
+}
+
+/* Fix for checkbox alignment */
+input[type=checkbox] {
+  margin-left: 10px;
+}
+.checkbox > input[type=checkbox] {
+  margin-left:0;
+}
+
+/* Inline form margin */
+.form-inline > * {
+  margin: 5px 5px;
+  margin-top: 10px;
+}
+
+/* Required form attribute */
+.form-group.required .control-label:before { 
+  content:"* ";
+  color:red;
+}
+
+/* Input addon alert */
+.input-group-alert {
+  color: #CE2525;
+  cursor: default;
+}
+
+/* Disable collapsing transitions */
+.collapsing {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+/* Nav tabs borders */
+.tab-content {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0px 0px 5px 5px;
+  padding: 10px;
+}
+.nav-tabs {
+  margin-bottom: 0;
+}
+
+/* Info buttons color */
+.btn-info,
+.btn-info:hover,
+.btn-info:active,
+.btn-info.active,
+.btn-info:visited,
+.btn-info:focus,
+.btn-info.focus,
+.btn-info:active:hover,
+.btn-info.active:hover,
+.btn-info:active:focus,
+.btn-info.active:focus,
+.btn-info:active.focus,
+.btn-info.active.focus {
+  color: #555;
+  background-color: #eee;
+  border-color: #ccc;
+}
+
+/* Status label colors */
+.label-warning {
+  background-color: #d8902a;
+}
+
+/* Subnavbar style */
+.nav-pills {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+hr.nav-sep {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Nav pills color */
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  color: #FFFFFF;
+  background-color:#5CB85C;
+}
+
+/* Collapsable panel hader */
+.panel-heading a:after {
+  font-family:'Glyphicons Halflings';
+  content:"\e114";
+  float: right;
+  color: grey;
+}
+.panel-heading a.collapsed:after {
+  content:"\e080";
+}
+
+/* Colored panels */
+.panel-default > .panel-heading-green {
+  background-color: #DBF8D4;
+}
+.panel-default > .panel-body-green {
+  background-color: #F7FCF7;
+}
+
+/* Colored tab panel */
+.tab-sub, .nav-sub > li.active > a,
+.nav-sub > li.active > a:hover,
+.nav-sub > li.active > a:focus {
+  background-color: #F9F9F9;
+}
+
+/* Well background color */
+.well {
+  background-color: #FFFFFF;
+}
+
+/* Scrollable table */
+.table-scrollable {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Navbar style */
+.navbar-default {
+  background-color: #088836;
+  border-color: #045d0c;
+}
+.navbar-default .navbar-brand {
+  color: #f1f1f1;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #f1f1f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #f1f1f1;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #3aae1c;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #3aae1c;
+}
+.navbar-default .navbar-toggle {
+  border-color: #3aae1c;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #3aae1c;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #f1f1f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #f1f1f1;
+}
+.navbar-default .navbar-link {
+  color: #f1f1f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #f1f1f1;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #3aae1c;
+  }
+}
+
+/* Identification label in navbar */
+.navbar-text {
+  margin-left: 15px;
+}
+
+.navbar-btn {
+  margin-left: 15px;
+}
+
+.navbar-right {
+  margin-right: 0px;
+}
+
+/* Popup alert */
+.alert-dismissable,
+.alert-dismissible {
+  margin-top: 15px;
+}
+
+/* Pagination */
+.pagination > li.active > a,
+.pagination > li.active > a:hover {
+  color: #fff;
+  background: #5cb85c;
+  border-color: #4cae4c
+}
+
+/* Sticky footer */
+html {
+  position: relative;
+  min-height: 95%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+}

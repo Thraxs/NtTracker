@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@using NtTracker.Resources.UserAccount
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "UserAccount", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <p class="navbar-text hidden-xs">
+                @Strings.User <b>@User.Identity.GetUserName()</b>
+            </p>
+            <p class="navbar-text visible-xs">
+                @User.Identity.GetUserName()
+            </p>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-default navbar-btn">@Strings.Logout</button>
+        </li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(@Strings.Register, "Register", "UserAccount", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(@Strings.Login, "Login", "UserAccount", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
+    </ul>
+}

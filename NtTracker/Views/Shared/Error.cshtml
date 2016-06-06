@@ -1,0 +1,11 @@
+﻿@using NtTracker.Resources.Shared;
+@model HandleErrorInfo
+
+@{
+    ViewBag.Title = SharedStrings.ErrorTitle;
+}
+
+<h1 class="text-danger">@SharedStrings.ErrorTitle</h1>
+<h2 class="text-danger">@SharedStrings.ErrorDescription</h2>
+
+@Html.ActionLink(@SharedStrings.ErrorBack, "Index", "Home", null, new { @class = "btn btn-default" })
